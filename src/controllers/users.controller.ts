@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { CreateUserDto, UpdateUserDto } from 'src/types/DTOs/usersDTOs'
 import { UsersService } from 'src/services/user.service'
 
-@Controller("/api/users")
+@Controller("/users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
@@ -40,6 +40,5 @@ export class UsersController {
   }
 
   // autenticação - https://docs.nestjs.com/security/authentication
-  // validação de requests - https://docs.nestjs.com/techniques/validation
   // serialização (para resposes) - https://docs.nestjs.com/techniques/serialization
 }
