@@ -1,4 +1,5 @@
-import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common'
+import { AuthGuard } from 'src/auth/auth.guard'
+import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, Post, Put, UseGuards, UseInterceptors } from '@nestjs/common'
 import { CreateLoginDto, CreateUserDto, UpdateUserDto, UserDto } from 'src/types/DTOs/usersDTOs'
 import { UsersService } from 'src/services/user.service'
 
@@ -13,6 +14,7 @@ export class UsersController {
     return new UserDto({...newUser})
   }
 
+  @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get("/get/:id")
   async getUser(@Param('id') id: string): Promise<UserDto> {
@@ -20,6 +22,7 @@ export class UsersController {
     return new UserDto({...user})
   }
 
+  @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Put("/put/:id")
   async updateUser(
@@ -30,11 +33,13 @@ export class UsersController {
     return new UserDto({...user.raw})
   }
 
+  @UseGuards(AuthGuard)
   @Delete("/delete/:id")
   async deleteUser(@Param('id') id: string) {
     return await this.usersService.deleteUser(Number.parseInt(id))
   }
 
+  @UseGuards(AuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get("/list")
   async listUsers(): Promise<UserDto[]> {
@@ -47,6 +52,4 @@ export class UsersController {
   async login(@Body() request: CreateLoginDto): Promise<string> {
     return await this.usersService.login(request)
   }
-
-  // autenticação - https://docs.nestjs.com/security/authentication
 }

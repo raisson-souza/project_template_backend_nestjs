@@ -70,15 +70,7 @@ export class UsersService {
 
       if (!user) throw new CustomException(401, "Credenciais inválidas.")
 
-      return await this.jwtService.signAsync(
-        {
-          id: user.id,
-          name: user.fullName,
-        },
-        {
-          secret: env.JWT_SECRET(),
-        },
-      )
+      return await this.jwtService.signAsync({ "id": user.id }, { secret: env.JWT_SECRET() })
     }
     catch (ex) {
       throw new CustomException(500, (ex as Error).message)
