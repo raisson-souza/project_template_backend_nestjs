@@ -1,6 +1,6 @@
 
 import { CreateLoginDto, CreateUserDto, UpdateUserDto } from 'src/types/DTOs/usersDTOs'
-import { CustomException } from 'src/expections/CustomException'
+import { CustomException } from 'src/exceptions/CustomException'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { JwtService } from '@nestjs/jwt'
