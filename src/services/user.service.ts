@@ -1,4 +1,5 @@
 
+import { CustomException } from 'src/expections/CustomException'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
@@ -12,22 +13,47 @@ export class UsersService {
   ) {}
 
   async createUser(userModel: any) {
-    return await this.usersRepository.save(userModel)
+    try {
+      return await this.usersRepository.save(userModel)
+    }
+    catch (ex) {
+      throw new CustomException(500, (ex as Error).message)
+    }
   }
 
   async getUser(id: number) {
-    return this.usersRepository.findOneBy({ id })
+    try {
+      return this.usersRepository.findOneBy({ id })
+    }
+    catch (ex) {
+      throw new CustomException(500, (ex as Error).message)
+    }
   }
 
   async updateUser(id: number, userModel: any) {
-    return await this.usersRepository.update({ id: id }, userModel)
+    try {
+      return await this.usersRepository.update({ id: id }, userModel)
+    }
+    catch (ex) {
+      throw new CustomException(500, (ex as Error).message)
+    }
   }
 
   async deleteUser(id: number) {
-    return await this.usersRepository.delete(id)
+    try {
+      return await this.usersRepository.delete(id)
+    }
+    catch (ex) {
+      throw new CustomException(500, (ex as Error).message)
+    }
   }
 
   async listUsers() {
-    return await this.usersRepository.find()
+    try {
+      return await this.usersRepository.find()
+    }
+    catch (ex) {
+      throw new CustomException(500, (ex as Error).message)
+    }
   }
 }
