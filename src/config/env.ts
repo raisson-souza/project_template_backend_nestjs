@@ -3,7 +3,12 @@ const env = {
         const _ = process.env["PORT"]
         if (!_) throw new Error("PORT env not defined.")
         return _
-    },  
+    },
+    JWT_SECRET: () => {
+        const _ = process.env["JWT_SECRET"]
+        if (!_) throw new Error("JWT_SECRET env not defined.")
+        return _
+    },
     DATABASE_POSTGRES: {
         HOST: () => {
             const _ = process.env["DATABASE_POSTGRES_HOST"]

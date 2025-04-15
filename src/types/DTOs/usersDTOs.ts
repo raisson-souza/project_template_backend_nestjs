@@ -1,5 +1,5 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator"
-import { PartialType } from "@nestjs/mapped-types"
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from "class-validator"
+import { OmitType, PartialType } from "@nestjs/mapped-types"
 import { Transform } from 'class-transformer'
 
 export class CreateUserDto {
@@ -38,3 +38,19 @@ export class UserDto {
         Object.assign(this, partial)
     }
 }
+
+export class LoginDto {
+    @IsNumber()
+    @IsNotEmpty()
+    id: number
+
+    @IsEmail()
+    @IsNotEmpty()
+    email: string
+
+    @IsString()
+    @IsNotEmpty()
+    password: string
+}
+
+export class CreateLoginDto extends OmitType(LoginDto, ['id'] as const) { }

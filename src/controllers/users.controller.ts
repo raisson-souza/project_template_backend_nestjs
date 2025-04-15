@@ -1,5 +1,5 @@
 import { Body, ClassSerializerInterceptor, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common'
-import { CreateUserDto, UpdateUserDto, UserDto } from 'src/types/DTOs/usersDTOs'
+import { CreateLoginDto, CreateUserDto, UpdateUserDto, UserDto } from 'src/types/DTOs/usersDTOs'
 import { UsersService } from 'src/services/user.service'
 
 @Controller("/users")
@@ -40,6 +40,12 @@ export class UsersController {
   async listUsers(): Promise<UserDto[]> {
     const users = await this.usersService.listUsers()
     return users.map(user => new UserDto({...user}))
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post("/login")
+  async login(@Body() request: CreateLoginDto): Promise<string> {
+    return await this.usersService.login(request)
   }
 
   // autenticação - https://docs.nestjs.com/security/authentication
